@@ -12,9 +12,6 @@ interface CardPreviewProps {
 export const CardPreview: React.FC<CardPreviewProps> = ({ data, id, backgroundImage }) => {
   const parsedText = parseContent(data.textContent);
 
-  // Hardcoded trophies to match the vibe of the screenshot
-  const trophies = ['🧊', '🤖', '💎', '🛸', '🚀', '👹'];
-
   // Default to a starry background if none provided
   const bgImage = backgroundImage || "https://images.unsplash.com/photo-1534796636912-3b95b3ab5980?q=80&w=3260&auto=format&fit=crop";
 
@@ -62,11 +59,19 @@ export const CardPreview: React.FC<CardPreviewProps> = ({ data, id, backgroundIm
                 )}
               </div>
               
-              <div className="flex items-center gap-1.5 mt-1.5">
-                {trophies.map((emoji, idx) => (
-                  <span key={idx} className="text-[16px] filter drop-shadow leading-none">
-                    {emoji}
-                  </span>
+              <div className="flex items-center flex-wrap gap-1 mt-2">
+                {data.trophies.map((src, idx) => (
+                  <img 
+                    key={idx} 
+                    src={src}
+                    alt="trophy"
+                    className="h-[22px] w-auto object-contain drop-shadow-md"
+                    onError={(e) => {
+                      // Hide broken images but log error
+                      console.warn(`Failed to load trophy: ${src}`);
+                      (e.target as HTMLImageElement).style.display = 'none'; 
+                    }}
+                  />
                 ))}
               </div>
             </div>

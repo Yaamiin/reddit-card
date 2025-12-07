@@ -1,6 +1,6 @@
 import React from 'react';
 import { CardState } from '../types';
-import { Download, Upload, Info, Image as ImageIcon } from 'lucide-react';
+import { Download, Upload, Info, Image as ImageIcon, X, Plus } from 'lucide-react';
 
 interface EditorPanelProps {
   state: CardState;
@@ -46,6 +46,27 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({
     }
   };
 
+  const handleAddTrophy = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        if (event.target?.result) {
+          const newTrophies = [...state.trophies, event.target.result as string];
+          onChange('trophies', newTrophies);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+    // Reset value so same file can be selected again
+    e.target.value = '';
+  };
+
+  const handleRemoveTrophy = (index: number) => {
+    const newTrophies = state.trophies.filter((_, i) => i !== index);
+    onChange('trophies', newTrophies);
+  };
+
   return (
     <div className="w-full md:w-[400px] bg-[#111] border-l border-[#333] h-screen overflow-y-auto flex flex-col shadow-2xl z-20">
       <div className="p-6 border-b border-[#333]">
@@ -77,6 +98,44 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({
             />
             <label htmlFor="verified" className="text-sm text-gray-400 cursor-pointer select-none">Show Verified Badge</label>
           </div>
+        </div>
+
+        {/* Trophies Manager */}
+        <div className="space-y-2">
+          <label className="text-[11px] uppercase tracking-wider font-bold text-gray-500">Trophies & Awards</label>
+          <div className="flex flex-wrap gap-2 bg-[#1A1A1B] p-3 rounded-lg border border-[#343536] min-h-[50px]">
+            {state.trophies.map((trophy, index) => (
+              <div key={index} className="relative group w-8 h-8 bg-black/50 rounded flex items-center justify-center">
+                <img 
+                  src={trophy} 
+                  alt="Trophy" 
+                  className="w-6 h-6 object-contain"
+                  onError={(e) => {
+                     // visual indicator for broken image in editor
+                     (e.target as HTMLImageElement).src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNjY2IiBzdHJva2Utd2lkdGg9IjIiPjxjaXJjbGUgY3g9IjEyIiBjeT0iMTIiIHI9IjEwIi8+PGxpbmUgeDE9IjEyIiB5MT0iOCIgeDI9IjEyIiB5Mj0iMTIiLz48bGluZSB4MT0iMTIiIHkxPSIxNiIgeDI9IjEyLjAxIiB5Mj0iMTYiLz48L3N2Zz4=';
+                  }} 
+                />
+                <button 
+                  onClick={() => handleRemoveTrophy(index)}
+                  className="absolute -top-1.5 -right-1.5 bg-red-500 text-white rounded-full p-0.5 opacity-0 group-hover:opacity-100 transition-opacity shadow-sm hover:bg-red-600"
+                  title="Remove trophy"
+                >
+                  <X size={10} />
+                </button>
+              </div>
+            ))}
+            
+            <label className="w-8 h-8 flex items-center justify-center border border-dashed border-gray-600 rounded cursor-pointer hover:border-gray-400 hover:bg-white/5 transition-colors">
+              <Plus size={14} className="text-gray-400" />
+              <input 
+                type="file" 
+                accept="image/*" 
+                onChange={handleAddTrophy}
+                className="hidden" 
+              />
+            </label>
+          </div>
+          <p className="text-[10px] text-gray-500">Add local files if folder links don't work.</p>
         </div>
 
         {/* Content */}

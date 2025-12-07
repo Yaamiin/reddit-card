@@ -5,6 +5,7 @@ export interface CardState {
   likeCount: string;
   commentCount: string;
   showVerified: boolean;
+  trophies: string[];
 }
 
 export interface Trophy {
