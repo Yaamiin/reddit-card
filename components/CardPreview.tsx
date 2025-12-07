@@ -59,13 +59,14 @@ export const CardPreview: React.FC<CardPreviewProps> = ({ data, id, backgroundIm
                 )}
               </div>
               
-              <div className="flex items-center flex-wrap gap-1 mt-2">
+              <div className="flex items-center flex-wrap gap-1 mt-1.5">
                 {data.trophies.map((src, idx) => (
                   <img 
                     key={idx} 
                     src={src}
                     alt="trophy"
                     className="h-[22px] w-auto object-contain drop-shadow-md"
+                    crossOrigin="anonymous"
                     onError={(e) => {
                       // Hide broken images but log error
                       console.warn(`Failed to load trophy: ${src}`);
@@ -78,7 +79,7 @@ export const CardPreview: React.FC<CardPreviewProps> = ({ data, id, backgroundIm
           </div>
 
           {/* Main Text Content - Tight spacing */}
-          <div className="mt-1 mb-2 pl-1">
+          <div className="mt-0.5 mb-2 pl-1">
             <p className="text-[32px] leading-[1.1] font-black text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] tracking-tight">
               {parsedText.map((part, index) => {
                 if (part.type === 'yellow') {

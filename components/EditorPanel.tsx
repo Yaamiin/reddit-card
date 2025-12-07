@@ -105,14 +105,14 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({
           <label className="text-[11px] uppercase tracking-wider font-bold text-gray-500">Trophies & Awards</label>
           <div className="flex flex-wrap gap-2 bg-[#1A1A1B] p-3 rounded-lg border border-[#343536] min-h-[50px]">
             {state.trophies.map((trophy, index) => (
-              <div key={index} className="relative group w-8 h-8 bg-black/50 rounded flex items-center justify-center">
+              <div key={index} className="relative group w-8 h-8 bg-black/50 rounded flex items-center justify-center" title={trophy}>
                 <img 
                   src={trophy} 
                   alt="Trophy" 
                   className="w-6 h-6 object-contain"
                   onError={(e) => {
-                     // visual indicator for broken image in editor
-                     (e.target as HTMLImageElement).src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNjY2IiBzdHJva2Utd2lkdGg9IjIiPjxjaXJjbGUgY3g9IjEyIiBjeT0iMTIiIHI9IjEwIi8+PGxpbmUgeDE9IjEyIiB5MT0iOCIgeDI9IjEyIiB5Mj0iMTIiLz48bGluZSB4MT0iMTIiIHkxPSIxNiIgeDI9IjEyLjAxIiB5Mj0iMTYiLz48L3N2Zz4=';
+                     // visual indicator for broken image in editor: Yellow Warning Triangle
+                     (e.target as HTMLImageElement).src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZDMDAiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cGF0aCBkPSJNMTAuMjkgMy44NmwtOC41IDE0LjYzQTExIDE4IDAgMDAzLjUzIDIxaDE2Ljk0YTEgMSAwIDAwLjg4LTEuNTRsLTguNS0xNC42M2ExIDEgMCAwMC0xLjY2IDB6Ii8+PGxpbmUgeDE9IjEyIiB5MT0iOSIgeDI9IjEyIiB5Mj0iMTMiLz48bGluZSB4MT0iMTIiIHkxPSIxNyIgeDI9IjEyLjAxIiB5Mj0iMTciLz48L3N2Zz4=';
                   }} 
                 />
                 <button 
