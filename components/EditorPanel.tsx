@@ -1,12 +1,14 @@
 import React from 'react';
 import { CardState } from '../types';
-import { Download, Upload, Info, Image as ImageIcon, X, Plus } from 'lucide-react';
+import { Download, Upload, Info, Image as ImageIcon, X, Plus, Clapperboard } from 'lucide-react';
 
 interface EditorPanelProps {
   state: CardState;
   onChange: (key: keyof CardState, value: any) => void;
   onDownload: () => void;
+  onDownloadGif: () => void;
   isDownloading: boolean;
+  isDownloadingGif: boolean;
   backgroundImage: string | null;
   onBackgroundChange: (url: string) => void;
 }
@@ -15,7 +17,9 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({
   state, 
   onChange, 
   onDownload, 
+  onDownloadGif,
   isDownloading,
+  isDownloadingGif,
   backgroundImage,
   onBackgroundChange
 }) => {
@@ -223,18 +227,33 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({
 
       </div>
 
-      <div className="p-6 border-t border-[#333]">
+      <div className="p-6 border-t border-[#333] flex flex-col gap-3">
         <button 
           onClick={onDownload}
-          disabled={isDownloading}
-          className="w-full flex items-center justify-center gap-2 bg-white text-black font-bold py-4 rounded-full hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          disabled={isDownloading || isDownloadingGif}
+          className="w-full flex items-center justify-center gap-2 bg-white text-black font-bold py-3 rounded-full hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isDownloading ? (
-            <span>Processing...</span>
+            <span>Processing PNG...</span>
           ) : (
             <>
               <Download className="w-5 h-5" />
-              <span>Download Image</span>
+              <span>Download PNG</span>
+            </>
+          )}
+        </button>
+
+        <button 
+          onClick={onDownloadGif}
+          disabled={isDownloading || isDownloadingGif}
+          className="w-full flex items-center justify-center gap-2 bg-[#333] text-white font-bold py-3 rounded-full hover:bg-[#444] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {isDownloadingGif ? (
+            <span>Processing GIF...</span>
+          ) : (
+            <>
+              <Clapperboard className="w-5 h-5" />
+              <span>Download GIF (Beta)</span>
             </>
           )}
         </button>
