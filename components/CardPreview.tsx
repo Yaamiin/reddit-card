@@ -6,14 +6,14 @@ import { Heart, MessageCircle, BadgeCheck } from 'lucide-react';
 interface CardPreviewProps {
   data: CardState;
   id: string;
-  backgroundImage?: string;
+  backgroundImage?: string | null;
 }
 
 export const CardPreview: React.FC<CardPreviewProps> = ({ data, id, backgroundImage }) => {
   const parsedText = parseContent(data.textContent);
 
-  // Default to a starry background if none provided
-  const bgImage = backgroundImage || "https://images.unsplash.com/photo-1534796636912-3b95b3ab5980?q=80&w=3260&auto=format&fit=crop";
+  // Use the provided background, or fallback to the specific remote URL if completely null (safety net)
+  const bgImage = backgroundImage || "https://i.ibb.co/SwP1cnjd/default-background.jpg";
 
   return (
     <div className="flex items-center justify-center p-8 bg-[#050505] min-h-[400px]">
@@ -44,6 +44,13 @@ export const CardPreview: React.FC<CardPreviewProps> = ({ data, id, backgroundIm
                   alt="Profile" 
                   className="w-[72px] h-[72px] rounded-full object-cover border-[3px] border-white/15 shadow-md bg-[#111]"
                   crossOrigin="anonymous"
+                  onError={(e) => {
+                    // Fallback if local default file is missing
+                    const img = e.target as HTMLImageElement;
+                    if (!img.src.includes('default-avatar')) {
+                       img.src = "https://i.ibb.co/chnnqN3v/default-avatar.jpg";
+                    }
+                  }}
                 />
             </div>
 

@@ -4,9 +4,11 @@ import { CardPreview } from './components/CardPreview';
 import { EditorPanel } from './components/EditorPanel';
 import { downloadCard } from './utils/cardUtils';
 
-const DEFAULT_AVATAR = "https://api.dicebear.com/7.x/avataaars/svg?seed=Zirra";
+// Define hosted default paths
+const DEFAULT_AVATAR = "https://i.ibb.co/chnnqN3v/default-avatar.jpg";
+const DEFAULT_BACKGROUND = "https://i.ibb.co/SwP1cnjd/default-background.jpg";
 
-// Remote URLs - Fixes deployment missing image issues
+// Remote URLs for Trophies (Keep these remote or move to assets if you prefer)
 const DEFAULT_TROPHIES = [
   'https://i.ibb.co/V0K8Mz3F/Animated-Helpful-512.gif',
   'https://i.ibb.co/ZzFMZfHX/Animated-Cake-512.gif',
@@ -19,7 +21,7 @@ const DEFAULT_TROPHIES = [
 
 const App: React.FC = () => {
   const [cardState, setCardState] = useState<CardState>({
-    username: 'Zirra',
+    username: 'EZRA SHORTS',
     avatarUrl: DEFAULT_AVATAR,
     textContent: '{Teachers}, What\'s the dumbest lie a Student used to [Skip] Class !?',
     likeCount: '99+',
@@ -28,7 +30,8 @@ const App: React.FC = () => {
     trophies: DEFAULT_TROPHIES
   });
 
-  const [backgroundImage, setBackgroundImage] = useState<string | null>(null);
+  // Initialize background with the default hosted image
+  const [backgroundImage, setBackgroundImage] = useState<string | null>(DEFAULT_BACKGROUND);
   const [isDownloading, setIsDownloading] = useState(false);
 
   const handleStateChange = (key: keyof CardState, value: any) => {
