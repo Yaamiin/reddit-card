@@ -1,4 +1,4 @@
-import html2canvas from 'html2canvas';
+import { toPng } from 'html-to-image';
 
 // Parse text to identify highlights
 // {text} = Yellow
@@ -44,19 +44,20 @@ export const downloadCard = async (elementId: string, filename: string) => {
   const element = document.getElementById(elementId);
   if (!element) return;
 
+  // Wait for fonts to be ready to ensure text renders correctly
+  await document.fonts.ready;
+
   try {
-    const canvas = await html2canvas(element, {
-      backgroundColor: null,
-      scale: 3, // High resolution
-      allowTaint: true,
-      useCORS: true,
-      logging: false,
+    const dataUrl = await toPng(element, {
+      cacheBust: true,
+      pixelRatio: 3, // High resolution
+      backgroundColor: 'transparent', // Ensure transparency is preserved
     });
 
     const link = document.createElement('a');
     const cleanName = filename.replace(/[^a-z0-9]/gi, '-').toLowerCase();
     link.download = `${cleanName || 'card'}.png`;
-    link.href = canvas.toDataURL('image/png');
+    link.href = dataUrl;
     link.click();
   } catch (error) {
     console.error("Download failed:", error);

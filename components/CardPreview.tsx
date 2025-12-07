@@ -32,11 +32,11 @@ export const CardPreview: React.FC<CardPreviewProps> = ({ data, id, backgroundIm
         {/* Dark overlay */}
         <div className="absolute inset-0 bg-black/40 pointer-events-none" />
 
-        {/* Card Content - Using Margins instead of Gap for html2canvas stability */}
+        {/* Card Content */}
         <div className="relative z-10 flex flex-col p-6">
           
           {/* Header Section */}
-          <div className="flex items-start">
+          <div className="flex items-start gap-4">
             {/* Avatar */}
             <div className="relative shrink-0 pt-1">
                 <img 
@@ -47,27 +47,27 @@ export const CardPreview: React.FC<CardPreviewProps> = ({ data, id, backgroundIm
                 />
             </div>
 
-            {/* User Info - using ml-4 instead of gap-4 */}
-            <div className="flex flex-col pt-1.5 ml-4">
-              <div className="flex items-center">
+            {/* User Info */}
+            <div className="flex flex-col pt-1.5">
+              <div className="flex items-center gap-2">
                 <span className="text-white text-[26px] font-black tracking-tighter leading-none drop-shadow-md">
                   @{data.username}
                 </span>
                 {data.showVerified && (
-                  <div className="ml-2">
+                  <div>
                     <BadgeCheck className="w-6 h-6 text-[#3BA9EE] fill-[#3BA9EE] text-white" />
                   </div>
                 )}
               </div>
               
-              {/* Trophies - using mr-1 instead of gap */}
-              <div className="flex items-center flex-wrap mt-1.5">
+              {/* Trophies */}
+              <div className="flex items-center flex-wrap gap-1 mt-1.5">
                 {data.trophies.map((src, idx) => (
                   <img 
                     key={idx} 
                     src={src}
                     alt="trophy"
-                    className="h-[22px] w-auto object-contain drop-shadow-md mr-1"
+                    className="h-[22px] w-auto object-contain drop-shadow-md"
                     crossOrigin="anonymous"
                     onError={(e) => {
                       console.warn(`Failed to load trophy: ${src}`);
@@ -94,21 +94,19 @@ export const CardPreview: React.FC<CardPreviewProps> = ({ data, id, backgroundIm
             </p>
           </div>
 
-          {/* Footer stats - Manual margins instead of justify-between/gap */}
-          <div className="flex items-center pt-1 opacity-90 pl-1 w-full">
+          {/* Footer stats */}
+          <div className="flex items-center pt-1 opacity-90 pl-1 w-full justify-between">
             
             {/* Likes */}
-            <div className="flex items-center text-white drop-shadow-md">
+            <div className="flex items-center gap-2 text-white drop-shadow-md transform translate-y-[1px]">
               <Heart className="w-7 h-7 fill-transparent stroke-white stroke-[2.5px]" />
-              <span className="text-xl font-bold ml-2">{data.likeCount}</span>
+              <span className="text-xl font-bold">{data.likeCount}</span>
             </div>
             
-            <div className="flex-1"></div>
-
             {/* Comments */}
-            <div className="flex items-center text-white drop-shadow-md">
+            <div className="flex items-center gap-2 text-white drop-shadow-md transform translate-y-[1px]">
               <MessageCircle className="w-7 h-7 stroke-white stroke-[2.5px]" />
-              <span className="text-xl font-bold ml-2">{data.commentCount}</span>
+              <span className="text-xl font-bold">{data.commentCount}</span>
             </div>
 
           </div>
