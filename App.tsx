@@ -6,15 +6,15 @@ import { downloadCard } from './utils/cardUtils';
 
 const DEFAULT_AVATAR = "https://api.dicebear.com/7.x/avataaars/svg?seed=Zirra";
 
-// Default local paths - Points directly to trophies folder at root
+// Remote URLs - Fixes deployment missing image issues
 const DEFAULT_TROPHIES = [
-  'trophies/Animated_Helpful_512.gif',
-  'trophies/Animated_Cake_512.gif',
-  'trophies/CrabRave_512.gif',
-  'trophies/Illuminati_512.gif',
-  'trophies/SnooClappingPremium_512.gif',
-  'trophies/Superheart_512.gif',
-  'trophies/TakeMyPower_512.gif'
+  'https://i.ibb.co/V0K8Mz3F/Animated-Helpful-512.gif',
+  'https://i.ibb.co/ZzFMZfHX/Animated-Cake-512.gif',
+  'https://i.ibb.co/9H0KR2v6/Crab-Rave-512.gif',
+  'https://i.ibb.co/pjVr90dn/Illuminati-512.gif',
+  'https://i.ibb.co/kgS0sDsf/Snoo-Clapping-Premium-512.gif',
+  'https://i.ibb.co/7dWStypC/Superheart-512.gif',
+  'https://i.ibb.co/KpgGLMnH/Take-My-Power-512.gif'
 ];
 
 const App: React.FC = () => {
