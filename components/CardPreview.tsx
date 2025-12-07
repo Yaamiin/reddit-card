@@ -67,7 +67,7 @@ export const CardPreview: React.FC<CardPreviewProps> = ({ data, id, backgroundIm
                     key={idx} 
                     src={src}
                     alt="trophy"
-                    className="h-[22px] w-auto object-contain drop-shadow-md"
+                    className="trophy-img h-[22px] w-auto object-contain drop-shadow-md"
                     crossOrigin="anonymous"
                     onError={(e) => {
                       console.warn(`Failed to load trophy: ${src}`);

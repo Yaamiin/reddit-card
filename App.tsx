@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { CardState } from './types';
 import { CardPreview } from './components/CardPreview';
 import { EditorPanel } from './components/EditorPanel';
-import { downloadCard, downloadGif } from './utils/cardUtils';
+import { downloadCard } from './utils/cardUtils';
 
 const DEFAULT_AVATAR = "https://api.dicebear.com/7.x/avataaars/svg?seed=Zirra";
 
@@ -30,7 +30,6 @@ const App: React.FC = () => {
 
   const [backgroundImage, setBackgroundImage] = useState<string | null>(null);
   const [isDownloading, setIsDownloading] = useState(false);
-  const [isDownloadingGif, setIsDownloadingGif] = useState(false);
 
   const handleStateChange = (key: keyof CardState, value: any) => {
     setCardState(prev => ({ ...prev, [key]: value }));
@@ -42,14 +41,6 @@ const App: React.FC = () => {
     setTimeout(async () => {
       await downloadCard('capture-target', cardState.username || 'galaxy-card');
       setIsDownloading(false);
-    }, 100);
-  };
-
-  const handleDownloadGif = async () => {
-    setIsDownloadingGif(true);
-    setTimeout(async () => {
-      await downloadGif('capture-target', cardState.username || 'galaxy-card-gif');
-      setIsDownloadingGif(false);
     }, 100);
   };
 
@@ -78,9 +69,7 @@ const App: React.FC = () => {
         state={cardState} 
         onChange={handleStateChange} 
         onDownload={handleDownload}
-        onDownloadGif={handleDownloadGif}
         isDownloading={isDownloading}
-        isDownloadingGif={isDownloadingGif}
         backgroundImage={backgroundImage}
         onBackgroundChange={setBackgroundImage}
       />

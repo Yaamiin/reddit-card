@@ -1,14 +1,12 @@
 import React from 'react';
 import { CardState } from '../types';
-import { Download, Upload, Info, Image as ImageIcon, X, Plus, Clapperboard } from 'lucide-react';
+import { Download, Upload, Info, Image as ImageIcon, X, Plus } from 'lucide-react';
 
 interface EditorPanelProps {
   state: CardState;
   onChange: (key: keyof CardState, value: any) => void;
   onDownload: () => void;
-  onDownloadGif: () => void;
   isDownloading: boolean;
-  isDownloadingGif: boolean;
   backgroundImage: string | null;
   onBackgroundChange: (url: string) => void;
 }
@@ -17,9 +15,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({
   state, 
   onChange, 
   onDownload, 
-  onDownloadGif,
   isDownloading,
-  isDownloadingGif,
   backgroundImage,
   onBackgroundChange
 }) => {
@@ -115,7 +111,6 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({
                   alt="Trophy" 
                   className="w-6 h-6 object-contain"
                   onError={(e) => {
-                     // visual indicator for broken image in editor: Yellow Warning Triangle
                      (e.target as HTMLImageElement).src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZDMDAiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cGF0aCBkPSJNMTAuMjkgMy44NmwtOC41IDE0LjYzQTExIDE4IDAgMDAzLjUzIDIxaDE2Ljk0YTEgMSAwIDAwLjg4LTEuNTRsLTguNS0xNC42M2ExIDEgMCAwMC0xLjY2IDB6Ii8+PGxpbmUgeDE9IjEyIiB5MT0iOSIgeDI9IjEyIiB5Mj0iMTMiLz48bGluZSB4MT0iMTIiIHkxPSIxNyIgeDI9IjEyLjAxIiB5Mj0iMTciLz48L3N2Zz4=';
                   }} 
                 />
@@ -227,10 +222,10 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({
 
       </div>
 
-      <div className="p-6 border-t border-[#333] flex flex-col gap-3">
+      <div className="p-6 border-t border-[#333]">
         <button 
           onClick={onDownload}
-          disabled={isDownloading || isDownloadingGif}
+          disabled={isDownloading}
           className="w-full flex items-center justify-center gap-2 bg-white text-black font-bold py-3 rounded-full hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isDownloading ? (
@@ -239,21 +234,6 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({
             <>
               <Download className="w-5 h-5" />
               <span>Download PNG</span>
-            </>
-          )}
-        </button>
-
-        <button 
-          onClick={onDownloadGif}
-          disabled={isDownloading || isDownloadingGif}
-          className="w-full flex items-center justify-center gap-2 bg-[#333] text-white font-bold py-3 rounded-full hover:bg-[#444] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {isDownloadingGif ? (
-            <span>Processing GIF...</span>
-          ) : (
-            <>
-              <Clapperboard className="w-5 h-5" />
-              <span>Download GIF (Beta)</span>
             </>
           )}
         </button>

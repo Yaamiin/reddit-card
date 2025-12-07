@@ -1,38 +1,40 @@
-declare module 'gifenc' {
-  export class GIFEncoder {
-    constructor();
-    writeFrame(
-      index: Uint8Array | Uint8ClampedArray | number[],
-      width: number,
-      height: number,
-      options?: {
-        palette?: number[][];
-        delay?: number;
-        transparent?: number;
-        repeat?: number;
-        dispose?: number;
-      }
-    ): void;
-    finish(): void;
-    bytes(): Uint8Array;
-    stream(): ReadableStream;
-  }
+// Fixed: Replaced missing vite/client reference with manual declarations
+declare module '*.svg' {
+  const content: string;
+  export default content;
+}
 
-  export function quantize(
-    rgba: Uint8Array | Uint8ClampedArray,
-    maxColors: number,
-    options?: {
-      format?: 'rgb' | 'rgba' | 'rgb444' | 'rgba4444' | 'rgb565';
-      onebit?: boolean;
-      clearAlpha?: boolean;
-      clearAlphaThreshold?: number;
-      clearAlphaColor?: number;
-    }
-  ): number[][];
+declare module '*.png' {
+  const content: string;
+  export default content;
+}
 
-  export function applyPalette(
-    rgba: Uint8Array | Uint8ClampedArray,
-    palette: number[][],
-    format?: 'rgb' | 'rgba' | 'rgb444' | 'rgba4444' | 'rgb565'
-  ): Uint8Array;
+declare module '*.jpg' {
+  const content: string;
+  export default content;
+}
+
+declare module '*.jpeg' {
+  const content: string;
+  export default content;
+}
+
+declare module '*.gif' {
+  const content: string;
+  export default content;
+}
+
+declare module '*.webp' {
+  const content: string;
+  export default content;
+}
+
+declare module '*.ico' {
+  const content: string;
+  export default content;
+}
+
+declare module '*.bmp' {
+  const content: string;
+  export default content;
 }
