@@ -20,7 +20,6 @@ export const CardPreview: React.FC<CardPreviewProps> = ({ data, id, backgroundIm
       <div 
         id={id}
         className="relative w-[600px] overflow-hidden rounded-[24px] shadow-2xl"
-        // No fixed aspect ratio - let content dictate height for compactness
       >
         {/* Background Image */}
         <div 
@@ -33,11 +32,11 @@ export const CardPreview: React.FC<CardPreviewProps> = ({ data, id, backgroundIm
         {/* Dark overlay */}
         <div className="absolute inset-0 bg-black/40 pointer-events-none" />
 
-        {/* Card Content - Compact stacking */}
+        {/* Card Content - Using Margins instead of Gap for html2canvas stability */}
         <div className="relative z-10 flex flex-col p-6">
           
           {/* Header Section */}
-          <div className="flex items-start gap-4">
+          <div className="flex items-start">
             {/* Avatar */}
             <div className="relative shrink-0 pt-1">
                 <img 
@@ -48,27 +47,29 @@ export const CardPreview: React.FC<CardPreviewProps> = ({ data, id, backgroundIm
                 />
             </div>
 
-            {/* User Info */}
-            <div className="flex flex-col pt-1.5">
-              <div className="flex items-center gap-2">
+            {/* User Info - using ml-4 instead of gap-4 */}
+            <div className="flex flex-col pt-1.5 ml-4">
+              <div className="flex items-center">
                 <span className="text-white text-[26px] font-black tracking-tighter leading-none drop-shadow-md">
                   @{data.username}
                 </span>
                 {data.showVerified && (
-                  <BadgeCheck className="w-6 h-6 text-[#3BA9EE] fill-[#3BA9EE] text-white" />
+                  <div className="ml-2">
+                    <BadgeCheck className="w-6 h-6 text-[#3BA9EE] fill-[#3BA9EE] text-white" />
+                  </div>
                 )}
               </div>
               
-              <div className="flex items-center flex-wrap gap-1 mt-1.5">
+              {/* Trophies - using mr-1 instead of gap */}
+              <div className="flex items-center flex-wrap mt-1.5">
                 {data.trophies.map((src, idx) => (
                   <img 
                     key={idx} 
                     src={src}
                     alt="trophy"
-                    className="h-[22px] w-auto object-contain drop-shadow-md"
+                    className="h-[22px] w-auto object-contain drop-shadow-md mr-1"
                     crossOrigin="anonymous"
                     onError={(e) => {
-                      // Hide broken images but log error
                       console.warn(`Failed to load trophy: ${src}`);
                       (e.target as HTMLImageElement).style.display = 'none'; 
                     }}
@@ -78,7 +79,7 @@ export const CardPreview: React.FC<CardPreviewProps> = ({ data, id, backgroundIm
             </div>
           </div>
 
-          {/* Main Text Content - Tight spacing */}
+          {/* Main Text Content */}
           <div className="mt-0.5 mb-2 pl-1">
             <p className="text-[32px] leading-[1.1] font-black text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] tracking-tight">
               {parsedText.map((part, index) => {
@@ -93,17 +94,23 @@ export const CardPreview: React.FC<CardPreviewProps> = ({ data, id, backgroundIm
             </p>
           </div>
 
-          {/* Footer stats */}
-          <div className="flex items-center justify-between pt-1 opacity-90 pl-1">
-            <div className="flex items-center gap-2 text-white drop-shadow-md">
+          {/* Footer stats - Manual margins instead of justify-between/gap */}
+          <div className="flex items-center pt-1 opacity-90 pl-1 w-full">
+            
+            {/* Likes */}
+            <div className="flex items-center text-white drop-shadow-md">
               <Heart className="w-7 h-7 fill-transparent stroke-white stroke-[2.5px]" />
-              <span className="text-xl font-bold translate-y-[1px]">{data.likeCount}</span>
+              <span className="text-xl font-bold ml-2">{data.likeCount}</span>
             </div>
             
-            <div className="flex items-center gap-2 text-white drop-shadow-md">
+            <div className="flex-1"></div>
+
+            {/* Comments */}
+            <div className="flex items-center text-white drop-shadow-md">
               <MessageCircle className="w-7 h-7 stroke-white stroke-[2.5px]" />
-              <span className="text-xl font-bold translate-y-[1px]">{data.commentCount}</span>
+              <span className="text-xl font-bold ml-2">{data.commentCount}</span>
             </div>
+
           </div>
 
         </div>
